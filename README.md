@@ -90,10 +90,11 @@ $server->start();
 
 压测时连接情况：
 
-![ab](img/ab.png)
+![ab](img/abbefore.png)
 
 压测后连接情况：
 
+![ab](img/abafter.png)
 
 这里服务端只有1个worker进程在工作，完成100个请求，且每个请求的SQL查询是sleep 1秒，花了约11秒，如果是php-fpm+mysqli这样的模式，1个worker进程，那么得花100秒。
 
