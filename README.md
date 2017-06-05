@@ -1,4 +1,4 @@
-基于Swoole2协程特性实现的MySQL连接池
+基于Swoole2协程特性实现的MySQL连接池（**该项目已暂停开发/支持！**）
 - - -
 使用Swoole2的\Swoole\Coroutine\MySQL创建连接，通过静态类和静态成员属性维护连接池，不同协程可以共享该连接池。
 
