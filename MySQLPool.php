@@ -82,9 +82,10 @@ class MySQLPool
 		$connsPool = &self::$spareConns[$connName];
 		if (!empty($connsPool) && count($connsPool) > self::$resumeFetchCount[$connName]) {
 			$conn = array_pop($connsPool);
-			self::$busyConns[$connName][spl_object_hash($conn)] = $conn;
-
-			return $conn;
+			if ($conn->connected) {
+				self::$busyConns[$connName][spl_object_hash($conn)] = $conn;
+				return $conn;
+			}
 		}
 
 		if (count(self::$busyConns[$connName]) + count($connsPool) == self::$connsConfig[$connName]['maxConns']) {
@@ -96,9 +97,10 @@ class MySQLPool
 			self::$resumeFetchCount[$connName]--;
 			if (!empty($connsPool)) {
 				$conn = array_pop($connsPool);
-				self::$busyConns[$connName][spl_object_hash($conn)] = $conn;
-
-				return $conn;
+				if ($conn->connected) {
+					self::$busyConns[$connName][spl_object_hash($conn)] = $conn;
+					return $conn;
+				}
 			} else {
 				return false;//should not happen
 			}
